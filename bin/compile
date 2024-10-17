@@ -35,7 +35,6 @@ install_system_deps() {
 libnspr4
 libnss3
 libxss1
-libasound2
 fonts-noto-color-emoji
 libgbm1
 libatk-bridge2.0-0
@@ -44,6 +43,17 @@ libxrandr2
 libatspi2.0-0
 libxshmfence-dev
 EOF
+
+		# If stack is heroku-24, install libasound2t64
+		if [[ "$STACK" == "heroku-24" ]]; then
+			cat << EOF >>$build_tmpdir/Aptfile
+libasound2t64
+EOF
+		else
+			cat << EOF >>$build_tmpdir/Aptfile
+libasound2
+EOF
+		fi
 	fi
 
 	if [[ "$SUPPORTED_BROWSERS" == *"firefox"* ]]; then
